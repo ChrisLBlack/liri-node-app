@@ -12,5 +12,3 @@ exports.spotify = {
   secret: process.env.SPOTIFY_SECRET
 };
 
-const spotify = new Spotify(keys.spotify);
-const client = new Twitter(keys.twitter);
