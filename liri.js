@@ -18,13 +18,11 @@ const keys = require("./keys");
 let client = new Twitter(keys.twitter);
 
 //get tweets from Twitter accound and prints them to the console
-client.get('statuses/user_timeline', "ChrisBl79265149", function (error, tweets, response) {
+client.get('statuses/user_timeline', "ChrisBl79265149", function (error, tweets) {
     if (!error) {
-        console.log(tweets[0].text);
-        // for (i = 0; i < tweets.length; i++); {
-            
-        //     console.log(tweets.length);
-        // };
+        for (let tweet of tweets) {
+          console.log(tweet.user.screen_name, tweet.text)
+        };
     }
 });
 
