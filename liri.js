@@ -1,4 +1,3 @@
-
 //configures .env file for keys
 require("dotenv").config();
 //requires fs npm
@@ -17,14 +16,31 @@ const keys = require("./keys");
 // let spotify = new Spotify(keys.spotify);
 let client = new Twitter(keys.twitter);
 
+let nodeCommand = process.argv[3];
+let userCommand = process.argv[2];
+
+
 //get tweets from Twitter accound and prints them to the console
-client.get('statuses/user_timeline', "ChrisBl79265149", function (error, tweets) {
-    if (!error) {
-        for (let tweet of tweets) {
-          console.log(tweet.user.screen_name, tweet.text)
-        };
+getTweets = () => {
+    client.get('statuses/user_timeline', "ChrisBl79265149", function (error, tweets, response) {
+        if (!error) {
+            for (let tweet of tweets) {
+                console.log("---------------------------------")
+                console.log(tweet.user.screen_name, tweet.text)
+                console.log("---------------------------------")
+            };
+        }
+    });
+
+};
+
+getCommands = (command, nodeCommand ) => {
+    switch(command) {
+        case "my-tweets": 
+        getTweets();
+        break;
     }
-});
+};
 
 // console.log(client);
 
@@ -33,3 +49,5 @@ client.get('statuses/user_timeline', "ChrisBl79265149", function (error, tweets)
 //     name: "tweet",
 //     message: "Do you want to see my tweets?"
 // });
+
+getCommands(userCommand, nodeCommand);
