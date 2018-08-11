@@ -48,8 +48,13 @@ getSpotify = (song) => {
             console.log(err);
         }
         let song = data.tracks.items[0];
-        console.log(song.artists[0].name)
-        // console.log(song.artists.name);
+        console.log(
+        `Artist: ${song.artists[0].name}
+        Song: ${song.name}
+        Preview URL: ${song.preview_url}`)
+        console.log("---------------------------------------")
+    
+        
     });
 };
 
