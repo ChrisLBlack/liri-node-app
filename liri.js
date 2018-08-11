@@ -4,7 +4,6 @@ require("dotenv").config();
 const fs = require("fs");
 //requires Twitter npm
 const Twitter = require("twitter");
-
 //questions for node to take from the user
 const inquirer = require("inquirer");
 //npm for sending API requests
@@ -13,14 +12,14 @@ const request = require("request");
 const keys = require("./keys");
 
 
-// let spotify = new Spotify(keys.spotify);
+let spotify = new Spotify(keys.spotify);
 let client = new Twitter(keys.twitter);
 
 let nodeCommand = process.argv[3];
 let userCommand = process.argv[2];
 
 
-//get tweets from Twitter accound and prints them to the console
+//get tweets from Twitter accound and prints them to the console when user runs progam and asks for "my-tweets"
 getTweets = () => {
     client.get('statuses/user_timeline', "ChrisBl79265149", function (error, tweets, response) {
         if (!error) {
@@ -33,6 +32,14 @@ getTweets = () => {
     });
 
 };
+
+getSpotify = () => {
+    
+}
+
+
+
+
 
 getCommands = (command, nodeCommand ) => {
     switch(command) {
