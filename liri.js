@@ -8,24 +8,20 @@ const keys = require("./keys");
 const Twitter = require("twitter");
 //requires Spotify npm
 const Spotify = require('node-spotify-api');
-//requires omdb npm 
-const Omdb = require('omdb');
-//questions for node to take from the user
-const inquirer = require("inquirer");
 //npm for sending API requests
 const request = require("request");
-
-
-
-let spotifySong = new Spotify(keys.spotify);
-let client = new Twitter(keys.twitter);
-// let movie = new Omdb(keys.omdb);
 
 let nodeCommand = process.argv[3];
 let userCommand = process.argv[2];
 
 
-//get tweets from Twitter accound and prints them to the console when user runs progam and asks for "my-tweets"
+let spotifySong = new Spotify(keys.spotify);
+let client = new Twitter(keys.twitter);
+
+let omdbKey = (keys.omdb.api);
+
+
+//get tweets from Twitter account and prints them to the console. command "my-tweets"
 getTweets = () => {
     client.get('statuses/user_timeline', "ChrisBl79265149", function (error, tweets, response) {
         if (!error) {
@@ -38,7 +34,7 @@ getTweets = () => {
     });
 
 };
-
+//gets spotify song and prints info to the console.  command "spotify-this-song"
 getSpotify = (song) => {
     if (song === "") {
         song = "The Sign";
@@ -62,21 +58,31 @@ getSpotify = (song) => {
         
     });
 };
+// gets movie data and prints info to the console.  command "movie-this"
+getMovie = () => {
 
-// getMovie = () => {
+    if (nodeCommand === undefined){
+        nodeCommand = "Mr. Nobody";
+    }
 
-//     // if (movie === undefined){
-//     //     movie = "Mr. Nobody";
-//     // }
-//     movie.search(movieName,(err, body) => {
-//         if(err){
-//             console.log(err);
-//         };
-//         console.log(movieName);
-//     });
-
-// };
-
+    let URL = `https://www.omdbapi.com/?t=${nodeCommand}&y=&plot=short&apikey=${omdbKey}`;
+    request(URL, function (err, response,) {
+        if(err){
+            console.log(err);
+        };
+        movieInfo = JSON.parse(response.body);
+        console.log("==================================")
+        console.log(`Title: ${movieInfo.Title}`);
+        console.log(`Year: ${movieInfo.Year}`);
+        console.log(`IMDB Rating: ${movieInfo.imdbRating}`);
+        console.log(`Country Produced: ${movieInfo.Country}`);
+        console.log(`Language: ${movieInfo.Language}`);
+        console.log(`Plot: ${movieInfo.Plot}`);
+        console.log(`Actors: ${movieInfo.Actors}`);
+        console.log(`===================================`);
+    });
+};
+//fucntion to feed info from random.txt file to spotify function. command "do-what-it-says";
 doIt = () => {
     fs.readFile("random.txt", "utf8", (err, data) => {
         if(err){
@@ -95,9 +101,6 @@ getCommands = (command, nodeCommand) => {
             break;
 
         case "spotify-this-song":
-            if (nodeCommand === undefined){
-                nodeCommand = "The Sign, Ace of Base"
-            }
             getSpotify(nodeCommand);
             break;
         
