@@ -51,7 +51,9 @@ getSpotify = (song) => {
         console.log(
         `Artist: ${song.artists[0].name}
         Song: ${song.name}
-        Preview URL: ${song.preview_url}`)
+        Preview URL: ${song.preview_url}
+        Album: ${song.album.name}`
+        );
         console.log("---------------------------------------")
     
         
