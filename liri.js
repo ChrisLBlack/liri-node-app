@@ -61,9 +61,6 @@ getSpotify = (song) => {
 };
 
 
-
-
-
 getCommands = (command, nodeCommand) => {
     switch (command) {
         case "my-tweets":
@@ -72,7 +69,7 @@ getCommands = (command, nodeCommand) => {
 
         case "spotify-this-song":
             if (nodeCommand === undefined){
-                nodeCommand = "The Sign"
+                nodeCommand = "The Sign, Ace of Base"
             }
             getSpotify(nodeCommand);
             break;
