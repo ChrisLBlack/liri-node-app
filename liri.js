@@ -6,8 +6,10 @@ const fs = require("fs");
 const keys = require("./keys");
 //requires Twitter keys
 const Twitter = require("twitter");
-//requirest Spotify npm
+//requires Spotify npm
 const Spotify = require('node-spotify-api');
+//requires omdb npm 
+const Omdb = require('omdb');
 //questions for node to take from the user
 const inquirer = require("inquirer");
 //npm for sending API requests
@@ -17,6 +19,7 @@ const request = require("request");
 
 let spotifySong = new Spotify(keys.spotify);
 let client = new Twitter(keys.twitter);
+// let movie = new Omdb(keys.omdb);
 
 let nodeCommand = process.argv[3];
 let userCommand = process.argv[2];
@@ -60,6 +63,30 @@ getSpotify = (song) => {
     });
 };
 
+// getMovie = () => {
+
+//     // if (movie === undefined){
+//     //     movie = "Mr. Nobody";
+//     // }
+//     movie.search(movieName,(err, body) => {
+//         if(err){
+//             console.log(err);
+//         };
+//         console.log(movieName);
+//     });
+
+// };
+
+doIt = () => {
+    fs.readFile("random.txt", "utf8", (err, data) => {
+        if(err){
+            console.log(err);
+        }
+    let dataArr = data.split(",");
+    getSpotify(dataArr[1]);
+
+    });
+};
 
 getCommands = (command, nodeCommand) => {
     switch (command) {
@@ -73,15 +100,18 @@ getCommands = (command, nodeCommand) => {
             }
             getSpotify(nodeCommand);
             break;
-    }
+        
+        case "movie-this":
+            getMovie();
+            break;
+        
+        case "do-what-it-says":
+            doIt();
+            break;
+
+    };
 };
 
-// console.log(client);
 
-// inquirer.prompt({
-//     type: "input",
-//     name: "tweet",
-//     message: "Do you want to see my tweets?"
-// });
 
 getCommands(userCommand, nodeCommand);

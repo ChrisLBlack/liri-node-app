@@ -12,3 +12,6 @@ exports.spotify = {
   secret: process.env.SPOTIFY_SECRET
 };
 
+exports.omdb = {
+  api: process.env.OMDB_API_KEY
+};
