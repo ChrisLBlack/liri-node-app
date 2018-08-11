@@ -2,17 +2,20 @@
 require("dotenv").config();
 //requires fs npm
 const fs = require("fs");
-//requires Twitter npm
+//where key data is stored (not actual API keys)
+const keys = require("./keys");
+//requires Twitter keys
 const Twitter = require("twitter");
+//requirest Spotify npm
+const Spotify = require('node-spotify-api');
 //questions for node to take from the user
 const inquirer = require("inquirer");
 //npm for sending API requests
 const request = require("request");
-//where key data is stored (not actual API keys)
-const keys = require("./keys");
 
 
-let spotify = new Spotify(keys.spotify);
+
+let spotifySong = new Spotify(keys.spotify);
 let client = new Twitter(keys.twitter);
 
 let nodeCommand = process.argv[3];
@@ -33,19 +36,39 @@ getTweets = () => {
 
 };
 
-getSpotify = () => {
-    
-}
+getSpotify = (song) => {
+    if (song === "") {
+        song = "The Sign";
+    }
+    spotifySong.search({
+        type: "track",
+        query: song
+    }, (err, data) => {
+        if (err) {
+            console.log(err);
+        }
+        let song = data.tracks.items[0];
+        console.log(song.artists[0].name)
+        // console.log(song.artists.name);
+    });
+};
 
 
 
 
 
-getCommands = (command, nodeCommand ) => {
-    switch(command) {
-        case "my-tweets": 
-        getTweets();
-        break;
+getCommands = (command, nodeCommand) => {
+    switch (command) {
+        case "my-tweets":
+            getTweets();
+            break;
+
+        case "spotify-this-song":
+            if (nodeCommand === undefined){
+                nodeCommand = "The Sign"
+            }
+            getSpotify(nodeCommand);
+            break;
     }
 };
 
