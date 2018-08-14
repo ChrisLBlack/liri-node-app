@@ -10,4 +10,4 @@ The third command is "movie-this" and much like the first three, sends an API re
 
 The fourth and final command "do-what-it-says", calls the spotify-this-song function.  However, it pulls the data on a .txt file and feeds it to the function.  
 
-All keys for the Twitter, Spotify, and OMDB API's are kept in a .env file to ensure their security.  They are not uploaded via a .gitignore file on my local machine. 
+All keys for the Twitter, Spotify, and OMDB API's are kept in a .env file to ensure their security.  They are not uploaded via a .gitignore file. 
