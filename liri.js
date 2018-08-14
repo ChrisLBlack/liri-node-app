@@ -36,9 +36,7 @@ getTweets = () => {
 };
 //gets spotify song and prints info to the console.  command "spotify-this-song"
 getSpotify = (song) => {
-    if (song === "") {
-        song = "The Sign";
-    }
+  
     spotifySong.search({
         type: "track",
         query: song
@@ -48,26 +46,26 @@ getSpotify = (song) => {
         }
         let song = data.tracks.items[0];
         console.log(
-        `Artist: ${song.artists[0].name}
+            `Artist: ${song.artists[0].name}
         Song: ${song.name}
         Preview URL: ${song.preview_url}
         Album: ${song.album.name}`
         );
         console.log("---------------------------------------")
-    
-        
+
+
     });
 };
 // gets movie data and prints info to the console.  command "movie-this"
 getMovie = () => {
 
-    if (nodeCommand === undefined){
+    if (nodeCommand === undefined) {
         nodeCommand = "Mr. Nobody";
     }
 
     let URL = `https://www.omdbapi.com/?t=${nodeCommand}&y=&plot=short&apikey=${omdbKey}`;
-    request(URL, function (err, response,) {
-        if(err){
+    request(URL, function (err, response, ) {
+        if (err) {
             console.log(err);
         };
         movieInfo = JSON.parse(response.body);
@@ -85,11 +83,11 @@ getMovie = () => {
 //fucntion to feed info from random.txt file to spotify function. command "do-what-it-says";
 doIt = () => {
     fs.readFile("random.txt", "utf8", (err, data) => {
-        if(err){
+        if (err) {
             console.log(err);
         }
-    let dataArr = data.split(",");
-    getSpotify(dataArr[1]);
+        let dataArr = data.split(",");
+        getSpotify(dataArr[1]);
 
     });
 };
@@ -101,13 +99,17 @@ getCommands = (command, nodeCommand) => {
             break;
 
         case "spotify-this-song":
+            if (nodeCommand === undefined) {
+                nodeCommand = "The Sign, Ace of Base";
+            };
+
             getSpotify(nodeCommand);
             break;
-        
+
         case "movie-this":
             getMovie();
             break;
-        
+
         case "do-what-it-says":
             doIt();
             break;
